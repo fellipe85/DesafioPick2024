@@ -1,4 +1,4 @@
-name: Pipeline de build e deploy Giropops-Senhas
+name: CI/CD Pipeline
 
 on:
   push:
@@ -26,19 +26,23 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_TOKEN }}
 
+    - name: Get the commit hash
+      id: vars
+      run: echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
     - name: Build with Melange
       run: |
         docker run --privileged --rm -v "${{ github.workspace }}":/work cgr.dev/chainguard/melange build giropops_alpine_melange.yaml --source-dir ./app --arch amd64,arm64 --signing-key melange.rsa
 
     - name: Build with Apko
       run: |
-        docker run --rm --workdir /work -v ${{ github.workspace }}:${{ github.workspace }} -w "${{ github.workspace }}" cgr.dev/chainguard/apko build giropops_alpine_apko.yaml giropops-senhas-melange:1.0 giropops-senhas-melange.tar --arch host
+        docker run --rm --workdir /work -v ${{ github.workspace }}:${{ github.workspace }} -w "${{ github.workspace }}" cgr.dev/chainguard/apko build giropops_alpine_apko.yaml giropops-senhas-melange:${{ env.VERSION }} giropops-senhas-melange.tar --arch host
 
     - name: Sign Docker image with Cosign
       run: |
-        cosign sign --key ${{ secrets.COSIGN_KEY }} giropops-senhas-melange:1.0
+        cosign sign --key ${{ secrets.COSIGN_KEY }} giropops-senhas-melange:${{ env.VERSION }}
 
     - name: Push Docker image to Docker Hub
       run: |
-        docker tag giropops-senhas-melange:1.0 ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:1.0
-        docker push ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:1.0
+        docker tag giropops-senhas-melange:${{ env.VERSION }} ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
