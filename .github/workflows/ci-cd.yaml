@@ -28,7 +28,7 @@ jobs:
 
     - name: Get the commit hash
       id: vars
-      run: echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      run: echo "VERSION=$(cat ./melange-apko/version.txt )" >> $GITHUB_ENV
 
     - name: Build with Melange
       run: |
@@ -40,7 +40,8 @@ jobs:
 
     - name: Build with Apko
       run: |
-        docker run --rm --workdir /work -v $PWD:$PWD -w /work cgr.dev/chainguard/apko build ./melange-apko/giropops_alpine_apko.yaml giropops-senhas-melange:${{ env.VERSION }} ./giropops-senhas-melange.tar --arch host
+        docker run --rm --workdir /work -v $PWD:$PWD -w /work cgr.dev/chainguard/apko build ./melange-apko/giropops_alpine_apko.yaml giropops-senhas-melange:${{ env.VERSION }} giropops-senhas-melange.tar --arch host
+        docker load << giropops-senhas-melange.tar 
 
     - name: Sign Docker image with Cosign
       run: |
