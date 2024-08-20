@@ -1,0 +1,55 @@
+package:
+  name: giropops-senhas-melange
+  version: 0.0.1
+  description: Giropops melange pick 2024
+  target-architecture:
+    - all
+  copyright:
+    - attestation: |
+        Copyright 1992, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2005,
+        2006, 2007, 2008, 2010, 2011, 2013, 2014, 2022 Free Software Foundation,
+        Inc.
+      license: GPL-3.0-or-later
+    - paths: ["*"]
+  dependencies:
+    runtime:
+      - python3
+
+environment:
+  contents:
+    repositories:
+      - https://dl-cdn.alpinelinux.org/alpine/edge/main
+      - https://dl-cdn.alpinelinux.org/alpine/edge/community
+    packages:
+      - alpine-baselayout-data
+      - ca-certificates-bundle
+      - busybox
+      - gcc
+      - musl-dev
+      - python3
+      - python3-dev
+      - py3-pip
+      - py3-virtualenv
+      - py3-flask
+      - git 
+
+pipeline:
+  - name: Build Giropops application
+    runs: |
+      EXECDIR="${{targets.destdir}}/giropops-senhas"
+      #WEBAPPDIR="${{targets.destdir}}/usr/share/webapps/giropops-senhas"
+      WEBAPPDIR="${{targets.destdir}}/giropops-senhas"
+      mkdir -p "${EXECDIR}" "${WEBAPPDIR}" "${{targets.destdir}}/app" 
+      #echo "#!/giropops-senhas/venv/bin/python3" > "${EXECDIR}/giropops-senhas"
+      #git clone https://github.com/badtuxx/giropops-senhas.git "${WEBAPPDIR}/giropops-senhas"
+      git clone https://github.com/fellipe85/DesafioPick2024.git "${WEBAPPDIR}"
+      #cat app.py >> "${EXECDIR}/giropops-senhas"
+      chmod +x "${EXECDIR}"
+      #virtualenv "${WEBAPPDIR}/venv" 
+      #sh -c "source '${WEBAPPDIR}/venv/bin/activate' && pip install --upgrade pip && pip install -r requirements.txt"
+      cd "${WEBAPPDIR}"/giropops-senhas-codigo
+      python3 -m venv "${WEBAPPDIR}/venv"
+      #chmod +x "${EXECDIR}/giropops-senhas" "${WEBAPPDIR}/venv/bin/activate"
+      . "${WEBAPPDIR}/venv/bin/activate"
+      pip install --upgrade pip && pip install -r requirements.txt
+
