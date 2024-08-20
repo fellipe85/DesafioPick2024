@@ -1,0 +1,73 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "sbom-sha256:5ca8c41906ef78f3182dc6d7ac3015eb05d95bb6777d339739dadff89beab4b5",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2024-08-13T15:22:27Z",
+    "creators": [
+      "Tool: apko (v0.17.0-dirty)",
+      "Organization: Chainguard, Inc"
+    ],
+    "licenseListVersion": "3.16"
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://spdx.org/spdxdocs/apko/",
+  "documentDescribes": [
+    "SPDXRef-Package-sha256-5ca8c41906ef78f3182dc6d7ac3015eb05d95bb6777d339739dadff89beab4b5"
+  ],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-sha256-5ca8c41906ef78f3182dc6d7ac3015eb05d95bb6777d339739dadff89beab4b5",
+      "name": "sha256:5ca8c41906ef78f3182dc6d7ac3015eb05d95bb6777d339739dadff89beab4b5",
+      "versionInfo": "sha256:5ca8c41906ef78f3182dc6d7ac3015eb05d95bb6777d339739dadff89beab4b5",
+      "filesAnalyzed": false,
+      "description": "Multi-arch image index",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "Organization: Chainguard, Inc.",
+      "sourceInfo": "Generated at image build time by apko",
+      "primaryPackagePurpose": "CONTAINER",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "5ca8c41906ef78f3182dc6d7ac3015eb05d95bb6777d339739dadff89beab4b5"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:oci/giropops-senhas-melange@sha256%3A5ca8c41906ef78f3182dc6d7ac3015eb05d95bb6777d339739dadff89beab4b5?mediaType=application%2Fvnd.oci.image.index.v1%2Bjson",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-sha256-b559aaafffb073547ff40eb76adec8ddb19d32666470213b7f0e5f830bb54f15",
+      "name": "sha256:b559aaafffb073547ff40eb76adec8ddb19d32666470213b7f0e5f830bb54f15",
+      "versionInfo": "sha256:b559aaafffb073547ff40eb76adec8ddb19d32666470213b7f0e5f830bb54f15",
+      "filesAnalyzed": false,
+      "downloadLocation": "NOASSERTION",
+      "supplier": "Organization: Chainguard, Inc.",
+      "primaryPackagePurpose": "CONTAINER",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "b559aaafffb073547ff40eb76adec8ddb19d32666470213b7f0e5f830bb54f15"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:oci/giropops-senhas-melange@sha256%3Ab559aaafffb073547ff40eb76adec8ddb19d32666470213b7f0e5f830bb54f15?arch=amd64\u0026mediaType=application%2Fvnd.oci.image.manifest.v1%2Bjson\u0026os=linux",
+          "referenceType": "purl"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-Package-sha256-5ca8c41906ef78f3182dc6d7ac3015eb05d95bb6777d339739dadff89beab4b5",
+      "relationshipType": "VARIANT_OF",
+      "relatedSpdxElement": "SPDXRef-Package-sha256-b559aaafffb073547ff40eb76adec8ddb19d32666470213b7f0e5f830bb54f15"
+    }
+  ]
+}
