@@ -37,7 +37,7 @@ jobs:
 
     - name: Build with Melange
       run: |
-        mkdir ./app
+        mkdir ./app ./packages
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
         #docker pull cgr.dev/chainguard/melange:latest
         #docker run --rm -v "${PWD}":/work cgr.dev/chainguard/melange keygen
@@ -45,9 +45,7 @@ jobs:
 
     - name: Build with Apko
       run: |
-        ls -latr packages/x86*
-        ls -latr packages/
-        sudo chown -R runner:docker packages
+        ls -latr 
         docker run --rm --workdir /work -v $PWD:$PWD -w /work cgr.dev/chainguard/apko build melange-apko/giropops_alpine_apko.yaml giropops-senhas-melange:${{ env.VERSION }} giropops-senhas-melange.tar --arch host
         docker load << giropops-senhas-melange.tar 
 
