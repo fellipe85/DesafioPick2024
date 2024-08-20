@@ -39,14 +39,14 @@ jobs:
       run: |
         mkdir ./app ./packages
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-        #docker pull cgr.dev/chainguard/melange:latest
-        #docker run --rm -v "${PWD}":/work cgr.dev/chainguard/melange keygen
-        docker run --privileged --rm -v "$PWD":/work -w /work cgr.dev/chainguard/melange build ./melange-apko/giropops_alpine_melange.yaml --source-dir ./app --arch amd64,arm64 --signing-key ./melange-apko/melange.rsa
+        docker pull cgr.dev/chainguard/melange:latest
+        docker run --rm -v "${PWD}":/work cgr.dev/chainguard/melange keygen
+        docker run --privileged --rm -v "$PWD":/work -w /work cgr.dev/chainguard/melange build ./melange-apko/giropops_alpine_melange.yaml --source-dir ./app --arch amd64,arm64 --signing-key ./melange.rsa
 
     - name: Build with Apko
       run: |
         ls -latr 
-        docker run --rm --workdir /work -v $PWD:$PWD -w /work cgr.dev/chainguard/apko build melange-apko/giropops_alpine_apko.yaml giropops-senhas-melange:${{ env.VERSION }} giropops-senhas-melange.tar --arch host
+        docker run --rm --workdir /work -v "${PWD}":/work -w /work cgr.dev/chainguard/apko build melange-apko/giropops_alpine_apko.yaml giropops-senhas-melange:${{ env.VERSION }} giropops-senhas-melange.tar --arch host
         docker load << giropops-senhas-melange.tar 
 
     - name: Sign Docker image with Cosign
