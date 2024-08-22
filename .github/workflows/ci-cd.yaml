@@ -58,11 +58,6 @@ jobs:
         docker tag giropops-senhas-melange:${{ env.VERSION }}-amd64 ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
         docker push ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
 
-    - name: Set up cosign
-      uses: sigstore/cosign-action@v2
-      with:
-        cosign-version: 'latest'
-
     - name: Load cosign key
       run: |
         echo "${{ secrets.COSIGN_KEY }}" > cosign.key
