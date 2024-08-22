@@ -62,9 +62,8 @@ jobs:
       run: |
         echo "${{ secrets.COSIGN_KEY }}" > cosign.key
 
-      - name: Sign with cosign
-        run: |
-          cosign sign --yes --key cosign.key fellipe85/giropops-senhas-melange:${{ env.VERSION }}
-        env:
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-
+    - name: Sign with cosign
+      run: |
+         cosign sign --yes --key cosign.key fellipe85/giropops-senhas-melange:${{ env.VERSION }}
+      env:
+         COSIGN_PASSWORD: 
