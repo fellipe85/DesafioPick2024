@@ -59,4 +59,4 @@ jobs:
 
     - name: Sign Docker image with Cosign
       run: |
-        cosign sign --key ${{ secrets.COSIGN_KEY }} giropops-senhas-melange:${{ env.VERSION }}
+        cosign sign --key  melange-apko/cosign.key giropops-senhas-melange:${{ env.VERSION }}
