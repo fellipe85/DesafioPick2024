@@ -47,11 +47,7 @@ jobs:
       run: |
         docker run --rm --workdir /work -v "${PWD}":/work -w /work cgr.dev/chainguard/apko build melange-apko/giropops_alpine_apko.yaml giropops-senhas-melange:${{ env.VERSION }} giropops-senhas-melange.tar --arch host
 
-    - name: Sign Docker image with Cosign
-      run: |
-        cosign sign --key melange-apko/cosign.key ./giropops-senhas-melange.tar
-
-        
+       
     - name: Load image into docker   
       run: |
         docker load < ./giropops-senhas-melange.tar 
@@ -62,4 +58,8 @@ jobs:
         docker tag giropops-senhas-melange:${{ env.VERSION }}-amd64 ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
         docker push ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
 
+    - name: Sign Docker image with Cosign
+      run: |
+        docker login
+        cosign sign --key  melange-apko/cosign.key giropops-senhas-melange:${{ env.VERSION }}
 
