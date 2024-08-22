@@ -49,8 +49,8 @@ jobs:
         ls -latr
         
     - name: Load image into docker   
-        run: |
-         docker load << giropops-senhas-melange.tar 
+      run: |
+        docker load << giropops-senhas-melange.tar 
 
     - name: Sign Docker image with Cosign
       run: |
