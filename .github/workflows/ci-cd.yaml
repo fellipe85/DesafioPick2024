@@ -62,8 +62,9 @@ jobs:
       run: |
         echo "${{ secrets.COSIGN_KEY }}" > cosign.key
 
-    - name: Sign Docker image
-      run: |
-        cosign sign --key cosign.key fellipe85/giropops-senhas-melange@sha256:$(docker inspect --format='{{index .RepoDigests 0}}' fellipe85/giropops-senhas-melange:${{ env.VERSION }})
-      env:
-        COSIGN_PASSWORD: 
+      - name: Sign with cosign
+        run: |
+          cosign sign --yes --key cosign.key fellipe85/giropops-senhas-melange:${{ env.VERSION }}
+        env:
+          COSIGN_PASSWORD: 
+
