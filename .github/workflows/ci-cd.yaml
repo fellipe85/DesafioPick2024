@@ -66,5 +66,5 @@ jobs:
         run: |
           cosign sign --yes --key cosign.key fellipe85/giropops-senhas-melange:${{ env.VERSION }}
         env:
-          COSIGN_PASSWORD: 
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
 
