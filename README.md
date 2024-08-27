@@ -3,7 +3,8 @@ Desafio de implementar a aplicação  Giropops Senhas em cluster kubernetes e se
 
 Objetivo: Criar uma aplicação de gestão de senhas utilizando Docker, Kubernetes, Helm, Kyverno, Cosign, Prometheus, apko e Melange para garantir a segurança, automação, e monitoramento contínuo da aplicação.
 
-O projeto está dividio em pastas 
+O projeto está dividio em pastas, em cada pasta exista a explicação do seu funcionamento. 
+
 1 - [Docker](https://github.com/fellipe85/DesafioPick2024/tree/main/Docker) - Consta a imagem docker e como realizar o build para utilizar uma imagem multistage utilizando chainguard
 
 2 - [Kubernetes](https://github.com/fellipe85/DesafioPick2024/tree/main/Kubernetes) - Os manifestos kubernetes utilizando a imagem gerada pelo melange/apko.
