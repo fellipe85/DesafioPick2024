@@ -37,19 +37,12 @@ pipeline:
   - name: Build Giropops application
     runs: |
       EXECDIR="${{targets.destdir}}/giropops-senhas"
-      #WEBAPPDIR="${{targets.destdir}}/usr/share/webapps/giropops-senhas"
       WEBAPPDIR="${{targets.destdir}}/giropops-senhas"
       mkdir -p "${EXECDIR}" "${WEBAPPDIR}" "${{targets.destdir}}/app" 
-      #echo "#!/giropops-senhas/venv/bin/python3" > "${EXECDIR}/giropops-senhas"
-      #git clone https://github.com/badtuxx/giropops-senhas.git "${WEBAPPDIR}/giropops-senhas"
       git clone https://github.com/fellipe85/DesafioPick2024.git "${WEBAPPDIR}"
-      #cat app.py >> "${EXECDIR}/giropops-senhas"
       chmod +x "${EXECDIR}"
-      #virtualenv "${WEBAPPDIR}/venv" 
-      #sh -c "source '${WEBAPPDIR}/venv/bin/activate' && pip install --upgrade pip && pip install -r requirements.txt"
       cd "${WEBAPPDIR}"/giropops-senhas-codigo
       python3 -m venv "${WEBAPPDIR}/venv"
-      #chmod +x "${EXECDIR}/giropops-senhas" "${WEBAPPDIR}/venv/bin/activate"
       . "${WEBAPPDIR}/venv/bin/activate"
       pip install --upgrade pip && pip install -r requirements.txt
 
