@@ -57,6 +57,8 @@ jobs:
       run: |
         docker tag giropops-senhas-melange:${{ env.VERSION }}-amd64 ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
         docker push ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
+        docker tag giropops-senhas-melange:${{ env.VERSION }}-arm64 ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange-arm:${{ env.VERSION }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange-arm:${{ env.VERSION }}
 
     - name: Load cosign key
       run: |
