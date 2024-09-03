@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: giropops-senhas
+  namespace: giropops-senhas
+  annotations: # ele quem vai fazer o controle , e dar poderes ao nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+spec:
+  rules:
+  - host: fellipe.sytes.net # aqui pode apontar para um host 
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix # quando bater o no giropops senhas ele sabe para onde redirecionar
+        backend: #aqui é onde indica o serviço que será utilizado
+          service:
+            name: giropops-senhas
+            port:
+              number: 5000

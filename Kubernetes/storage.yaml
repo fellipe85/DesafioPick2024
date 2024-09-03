@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    pvc: PVC
+   name: meu-pvc
+spec
+  accessModes: # é uma solicitação , o kubernetes vai tentar achar o melhor disco ,se não passar o storageclass , ele vai passar o default
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: giropops #nome do meu storageclass
+  selector:
+    matchLabels:  #ele vai procurar pelo storage nfs 
+      storage: nfs

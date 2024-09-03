@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: giropops-senhas
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"  # Garantir redirecionamento para HTTPS
+spec:
+  tls:
+  - hosts:
+    - fellipe.sytes.net
+    secretName: giropops-tls  # Nome do Secret criado anteriormente
+  rules:
+  - host: fellipe.sytes.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: giropops-senhas
+            port:
+              number: 5000
+
