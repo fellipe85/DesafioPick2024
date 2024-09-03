@@ -4,6 +4,7 @@ metadata:
   labels:
     app: giropops-senhas
   name: giropops-senhas
+  namespace: giropops-senhas
 spec:
   replicas: 3
   selector:
@@ -15,11 +16,15 @@ spec:
         app: giropops-senhas
     spec:
       containers:
-      - image: fellipe85/giropops-senhas-melange:1.0
+      - image: fellipe85/giropops-senhas-melange-arm:1.0
         name: giropops-senhas
         ports:
         - containerPort: 5000
-        resources:                                                                                                                limits:
+        env:
+          - name: REDIS_HOST
+            value: redis-service
+        resources:
+          limits:
             memory: "512Mi"
             cpu: "500m"
           requests:  

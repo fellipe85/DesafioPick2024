@@ -4,13 +4,15 @@ metadata:
   name: giropops-senhas
   labels:
     app: giropops-senhas
+  namespace: giropops-senhas
 spec:
   selector:
     app: giropops-senhas
   ports:
     - protocol: TCP
       port: 5000
-      nodePort: 32500
+        #nodePort: 32500
+      nodePort: 30080
       targetPort: 5000
       name: tcp-app
   type: NodePort

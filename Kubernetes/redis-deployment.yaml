@@ -4,6 +4,7 @@ metadata:
   labels:
     app: redis
   name: redis-deployment
+  namespace: giropops-senhas
 spec:
   replicas: 1
   selector:
@@ -15,7 +16,7 @@ spec:
         app: redis
     spec:
       containers:
-      - image: redis
+      - image: cgr.dev/chainguard/redis
         name: redis
         ports:
           - containerPort: 6379
