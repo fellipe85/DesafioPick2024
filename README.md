@@ -7,7 +7,7 @@ Para utilização estou utilizando um cluster k8s na OCI ([oracle cloud](https:/
 
 Para o projeto do Giropops-senhas , está sendo utilizada a infraesstrutura como pode se observar na imaagem abaixo 
 
-Abaixo temos o projeto diidido em pastas. 
+Abaixo temos o projeto dividido em pastas. 
 
 1 - [Docker](https://github.com/fellipe85/DesafioPick2024/tree/main/Docker) - Consta a imagem docker e como realizar o build para utilizar uma imagem multistage utilizando chainguard
 
