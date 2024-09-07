@@ -154,7 +154,7 @@ E podemos observar também que o certificado configurado em nossos manifestos do
 
 ![image](https://github.com/user-attachments/assets/688fa228-416e-4cf6-a5ae-4ccf6a7a2e03)
 
-Podemos observar no cloudflae o Tragego sendo utilizado a maioria pelo CDN 
+Podemos observar no cloudflae o trafego sendo utilizado a maioria pelo CDN , sem a necessidade de utilizar muito hardware.
 
 ![image](https://github.com/user-attachments/assets/29de1bad-41c1-4195-9d4c-3bad25a956d9)
 
