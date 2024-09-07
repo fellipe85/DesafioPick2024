@@ -117,7 +117,14 @@ Como no caso temos camada de CDN para a nossa aplicação os pods se permanecera
 
 ![image](https://github.com/user-attachments/assets/2e99be77-842f-4492-b7bd-66fb3dbb33a5)
 
+
+Após baixar a carga , observamos os pods morrendo e voltando ao seu estado de 3 pods para a aplicação 
+
+![image](https://github.com/user-attachments/assets/1968983c-f383-414b-a103-565952bb1d56)
+
 Podemos observar que com o CDN Ativo tivemos carga de 10 mil usuários sem nenhum erro ou perda de pacotes , melhorando bastante a questão de utilização de recursos no cluster.  Os resultados do teste  podem ser observados na pasta locust/Resultados
+
+
 
 
 
