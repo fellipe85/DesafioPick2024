@@ -154,6 +154,11 @@ E podemos observar também que o certificado configurado em nossos manifestos do
 
 ![image](https://github.com/user-attachments/assets/688fa228-416e-4cf6-a5ae-4ccf6a7a2e03)
 
+Podemos observar no cloudflae o Tragego sendo utilizado a maioria pelo CDN 
+
+![image](https://github.com/user-attachments/assets/29de1bad-41c1-4195-9d4c-3bad25a956d9)
+
+
 
 =======
 # 5 - Kyverno - Politicas de uso para o projeto
@@ -227,13 +232,31 @@ Após baixar a carga , observamos os pods morrendo e voltando ao seu estado de 3
 Podemos observar que com o CDN Ativo tivemos carga de 10 mil usuários sem nenhum erro ou perda de pacotes , melhorando bastante a questão de utilização de recursos no cluster.  Os resultados do teste  podem ser observados na pasta [locust/Resultados](https://github.com/fellipe85/DesafioPick2024/tree/main/locust/resultados)
 
 
-
-
-
-
-
-
 # 7 - Monitoring - 
+
+Para monitoramento esscolhemos a stack Prometheus/Grafana/Alertmanager para realizar o monitoramento do cluster e da aplicação. Para começar precisamos realizar a instalação e para isso vamos realizar atraves do kube-prometheus, ele ja tem node_exporter , prometheus , grafana , tudo integrado 
+
+O kube-prometheus é um conjunto de manifestos do Kubernetes que nos permite ter o Prometheus Operator, Grafana, AlertManager, Node Exporter, Kube-State-Metrics, Prometheus-Adapter instalados e configurados de forma tranquila e com alta disponibilidade. Além disso, ele nos permite ter uma visão completa do nosso cluster de Kubernetes. Ele nos permite monitorar todos os componentes do nosso cluster de Kubernetes, como por exemplo: kube-scheduler, kube-controller-manager, kubelet, kube-proxy, etc.
+
+#### Instalando o Kube-Prometheus
+
+Para instalar só seguir com os comandos 
+```shell
+git clone https://github.com/prometheus-operator/kube-prometheus
+cd kube-prometheus
+kubectl create -f manifests/setup
+```
+O processo de instalação pode demorar um pouco , podemos checar se foi instalado com o comando 
+```shell
+kubectl get servicemonitors -A
+```
+Após a instalação dos CRDs, vamos instalar o Prometheus e o Alertmanager. Para isso, basta executar o seguinte comando:
+```shell
+kubectl apply -f manifests/
+```
+Para acessar o Grafana, vamos utilizar o usuário `admin` e a senha `admin`, e já no primeiro login ele irá pedir para você alterar a senha.No Grafana para monitoramento do cluster vamos importar o dashboard do GrafanaLabs (https://grafana.com/grafana/dashboards/12740)
+
+
 
 # 8 - Helm
 
