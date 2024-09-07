@@ -1,0 +1,23 @@
+apiVersion: v1
+entries:
+  giropops-chart:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2024-08-26T21:07:08.194533872-03:00"
+    description: Helm chart para criar os Deployments, Services e ServiceAccounts
+      do giropops
+    digest: 712e07ad91dae023aa2a6abc5e27067da237e11f7b723b1f803744418d237c40
+    keywords:
+    - ingress
+    - giropops
+    - redis
+    maintainers:
+    - email: fabio.bartoli@outlook.com
+      name: Fabio Bartoli
+    name: giropops-chart
+    sources:
+    - https://github.com/fellipe85/DesafioPick2024/
+    urls:
+    - https://github.com/fellipe85/DesafioPick2024/helm_charts/giropops-chart-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-08-26T21:07:08.194152363-03:00"
