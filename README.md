@@ -20,11 +20,13 @@ Abaixo temos o projeto dividido em pastas.
 4 - [Kubernetes](https://github.com/fellipe85/DesafioPick2024/tree/main/Kubernetes) - Os manifestos kubernetes utilizando a imagem gerada pelo melange/apko utilizando cosign e boas praticas para manter a imagem mais segura possivel.
  4.1 - Ingress  
 
-5 - Kyverno - Todas a Politicas de uso para o projeto estarão aqui
+5 -[ Kyverno](https://github.com/fellipe85/DesafioPick2024/tree/main/kyverno) - Todas a Politicas de uso para o projeto estarão aqui
 
-6 - Locust - Teste de capacidade gerados e seus resultados
+6 - [Locust](https://github.com/fellipe85/DesafioPick2024/tree/main/locust) - Teste de capacidade gerados e seus resultados
 
-7 - Monitoring - Acesso ao monitoramento da nossa aplicação
+7 - [Monitoring ](https://github.com/fellipe85/DesafioPick2024/tree/main/monitoring)- Acesso ao monitoramento da nossa aplicação
+
+8 - [Helm](https://github.com/fellipe85/DesafioPick2024/tree/main/helm_charts)
 
 
 # 1 - Infraestrutura
@@ -87,9 +89,41 @@ E podemos observar também que o certificado configurado em nossos manifestos do
 
 
 =======
-# 4 - Kyverno - Politicas de uso para o projeto
+# 5 - Kyverno - Politicas de uso para o projeto
 
-# 5 - Locust - Teste de capacidade gerados e seus resultados 
+#### Instalando o Kyverno
+
+Para instalar é muito simples  , vamos fazer atraves do helm
+
+Primeiro passo instalar o helm
+```bash
+helm repo add kyeverno https://kyverno.github.io/kyverno
+helm repo update
+helm install kyverno kyverno/kyverno --namespace kyverno --create-namespace
+```
+
+Para ter rodando em alta disponibilidade o Admission controller precisa rodar em 3 nós , no site do kyverno tem bastante policies ja prontas.
+
+Verificando se foi instalado 
+
+- **Verifique os Pods:**
+    
+    ```
+    kubectl get pods -n kyverno
+    ```
+    
+    Este comando deve mostrar os pods do Kyverno em execução no namespace especificado.
+    
+- **Verifique os CRDs:**
+    
+    ```
+    kubectl get crd | grep kyverno
+    ```
+
+Para a nossa aplicação , criamos uma regra para que sempre tenha que existir um valor de cpu e memoria definido , e também containers sem  root em execução.
+
+
+# 6 - Locust - Teste de capacidade gerados e seus resultados 
 
 O Locust é uma ferramenta OpenSource que permite executarmos  estresse  de carga em nossa aplicação. Com ela, é possivel criar  scripts python para definir quais paths serão testamos e o tipo de teste a ser feito no website Você pode ver como o meu Locust está provisionado nos manifestos da pasta Locust 
 
@@ -131,4 +165,7 @@ Podemos observar que com o CDN Ativo tivemos carga de 10 mil usuários sem nenhu
 
 
 
-# 6 - Monitoring - 
+# 7 - Monitoring - 
+
+# 8 - Helm
+
