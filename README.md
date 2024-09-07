@@ -156,7 +156,7 @@ Após baixar a carga , observamos os pods morrendo e voltando ao seu estado de 3
 
 ![image](https://github.com/user-attachments/assets/1968983c-f383-414b-a103-565952bb1d56)
 
-Podemos observar que com o CDN Ativo tivemos carga de 10 mil usuários sem nenhum erro ou perda de pacotes , melhorando bastante a questão de utilização de recursos no cluster.  Os resultados do teste  podem ser observados na pasta locust/Resultados
+Podemos observar que com o CDN Ativo tivemos carga de 10 mil usuários sem nenhum erro ou perda de pacotes , melhorando bastante a questão de utilização de recursos no cluster.  Os resultados do teste  podem ser observados na pasta [locust/Resultados](https://github.com/fellipe85/DesafioPick2024/tree/main/locust/resultados)
 
 
 
