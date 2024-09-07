@@ -39,10 +39,68 @@ Abaixo está ilustrado como está a infraestrutura.
 
 Nesse projeto escolhemos utilizar imagens seguras , em nosso processo inicial fizemos imagens utilizando imagens da chainguard que já estão preparadas com correções de CVEs . Todas imagens foram criadas em Multistage aproveitando para deixar o mais compacta possivel.
 
+Abaixo demonstramos como esta sendo produzida a imagem tanto do giropops senhas. Para ambos os casos foi utilizado a opção de multistage afim de diminuir camadas e deixar a imagem a o mais segura possivel.
+```giropops-senhas.yaml
+FROM cgr.dev/chainguard/python:latest-dev as build
+WORKDIR /app
+COPY . ./
+RUN pip install -r requirements.txt --user
+
+
+FROM cgr.dev/chainguard/python:latest
+WORKDIR /app
+COPY --from=build /FROM cgr.dev/chainguard/redis
+COPY --from=build /app /app
+EXPOSE 5000
+ENTRYPOINT ["/home/nonroot/.local/bin/flask","run","--host=0.0.0.0"]
+#ENTRYPOINT ["python" , "app.py"]
+```
+Após escrever o Dockerfile , vamos realizar o build da imagem , enviar  a imagem para o docker hub e assinar com o cosign. Com isso teremos nossa imagem armazenada no Hub e assinada. Para realizar devemos ter o cosgin instalado na máquina e o login realizado no dockerhub , abaixo vamos demonstrar como é feita a build , instalação do cosign , login no docker hub , push da imagem para o hub e assinatura dessa imagem 
+
+```shell
+cd Docker
+docker build -t fellipe85/giropops-senhas:1.0 .
+docker login 
+#insira os dados para login
+docker push fellipe85/giropops-senhas:1.0
+```
+Instalando o cosign
+```shell 
+# binary
+curl -O -L "https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64"
+sudo mv cosign-linux-amd64 /usr/local/bin/cosign
+sudo chmod +x /usr/local/bin/cosign
+cosgin generate-key-pair
+cosign sign -key cosign.key fellipe85/giropops-senhas-melange:1.0 -y
+```
+Com isso temos nossa imagem assinada no dockerhub
+
+![image](https://github.com/user-attachments/assets/6e28d08c-0f4f-45d7-82ba-515f67d9867e)
+
+
 
 # 3 - Melange/Apko
 
-Para melhorar a segurança do nosso container e utilizar imagens singlelayer , estamos realizando um processo de de buildar uma imagem da aplicação utilizando a pasta giropops-senhas-codigo , nesse processo estamos fazendo o build da aplicação e criando uma aplicação do zero utilizando single layer . Todo esse processo é realizado no githubactions [githuactions](https://github.com/fellipe85/DesafioPick2024/tree/main/.github/workflows).Após o build é realizado o push para o Docker Hub , que foi o Hub de imagens escolhidos para esse projeto.
+Para melhorar a segurança do nosso container e utilizar imagens singlelayer , estamos realizando um processo de de buildar uma imagem da aplicação utilizando a pasta giropops-senhas-codigo , nesse processo estamos fazendo o build da aplicação e criando uma aplicação do zero utilizando single layer . Todo esse processo é realizado no githubactions [githuactions](https://github.com/fellipe85/DesafioPick2024/tree/main/.github/workflows).Após o build é realizado o push para o Docker Hub , que foi o Hub de imagens escolhidos para esse projeto. Um outro detalhe é que esse build pode gerar imagens para todos os tipos de arquitetura de hardware , no caso do meu projeto estou gerando imagens em amd64 e arm64, amd64 para quem quiser utilizar em seus pcs uma imagem segura e o arm64 é a imagem que estou utilizado devido ao meu cluster kubernetes estar baseado nessa arquitetura
+
+no Github actions estamos usando o mesmo processo que foi realizado em testes na minha máquina, fazemos a construção da imagem utilizando o melange , para isso precisamos exportar ao projeto as chaves que são geradas e utilizadas pelo melage/apko .
+![image](https://github.com/user-attachments/assets/0b5ef455-5150-45fe-bca9-e84229a4c90a)
+
+e nisso teremos que apresentar os pacotes necessários para a construção da imagem e além disso temos os passos de build da aplicação, como é possivem ver nesse yaml [melange-apko/giropops_alpine_melange.yaml](https://github.com/fellipe85/DesafioPick2024/blob/main/melange-apko/giropops_alpine_melange.yaml)
+
+Após realizar o build nos utilizamos o apko para gerar a imagem 
+[melange-apko/giropops_alpine_apko.yaml](https://github.com/fellipe85/DesafioPick2024/blob/main/melange-apko/giropops_alpine_apko.yaml)
+
+Todo esse processo é realizado um build a cada push na main do github actions. Para melhoria podemos realizar somente quando for atualizado o codigo ou qualquer parte que envolva o melange/apko e além disso fazer scan do código utilizando lint.
+
+O CI/CD está sendo realizado com sucesso como pode observar abaixo 
+
+![image](https://github.com/user-attachments/assets/04f101d6-3fbb-4985-a0e7-8c814efff70c)
+https://github.com/fellipe85/DesafioPick2024/actions/runs/10749261010/job/29813966872
+
+![image](https://github.com/user-attachments/assets/b9e3233b-4aaf-4be0-97c2-55e16e71f61c)
+
+A imagem que está sendo utilizada no nosso kubernetes é essa fellipe85/fellipe85/giropops-senhas-melange-arm:2.0 , tive que optar por ser arm devido ao cluster kubernetes estar em arquitetura arm.
 
 # 4 - Kubernetes
 
