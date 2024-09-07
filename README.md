@@ -11,7 +11,7 @@ Abaixo temos o projeto dividido em pastas.
 
 # Prefácio
 
-1 - Infraestrutura 
+1 - Infraestrutura - Demonstração da infraestrutura utilizada
 
 2 - [Docker](https://github.com/fellipe85/DesafioPick2024/tree/main/Docker) - Consta a imagem docker e como realizar o build para utilizar uma imagem multistage utilizando chainguard e cosign.
 
@@ -34,6 +34,9 @@ Abaixo temos o projeto dividido em pastas.
 Para a infraestrutura , incialmente foi adquirido um dominio fellipe.dev.br para criação do projeto , esse dominio esta hospedado no Cloudflare , onde é aplicada diversos modulos de defesa contra DDOs , bots inválidos oferencendo serviço de WAF para a aplicação , além disso temos também a opção de CDN , fazendo com que a aplicação responda mais rapidamente em qualquer lugar do mundo, outra opção que está ativada é DNSSEC , oferecendo proteção para o dominio. Após o cloudflare , optei em utilizar um cluster OKE na OCI , pois oferece um cluster sempre de graça. Para a configuração foi utilizada o projeto do Rapha_Borges https://github.com/Rapha-Borges/oke-free. Todo o cluster é criado utilizando terraform ou opentofu. 
 
 Abaixo está ilustrado como está a infraestrutura.
+
+![image](https://github.com/user-attachments/assets/8dabc021-6872-41ac-90b0-d6733635304d)
+
 
 # 2 - Docker 
 
