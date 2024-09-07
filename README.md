@@ -41,7 +41,7 @@ Nesse projeto escolhemos utilizar imagens seguras , em nosso processo inicial fi
 
 Para melhorar a segurança do nosso container e utilizar imagens singlelayer , estamos realizando um processo de de buildar uma imagem da aplicação utilizando a pasta giropops-senhas-codigo , nesse processo estamos fazendo o build da aplicação e criando uma aplicação do zero utilizando single layer . Todo esse processo é realizado no githubactions [githuactions](https://github.com/fellipe85/DesafioPick2024/tree/main/.github/workflows).Após o build é realizado o push para o Docker Hub , que foi o Hub de imagens escolhidos para esse projeto.
 
-3 - Kubernetes
+4 - Kubernetes
 
 Optei por criar um namespace separado para o giropops-senhas e o redis , nesse caso , separando a execução deles somente para esse namespace. Além disso foi criado um ingress para todos os serviços utilizados , cada um representado em seu diretorio. Dentro do diretorio temos os manifestos para o Giropops-senhas e Redis , ambos ncessários para a aplicação funcionar. 
 
@@ -52,9 +52,55 @@ kubectl apply -f Kubernetes/
 ```
 
 Com esse comando fazemos a instalação da aplicação(giropos e redis) 
+
+Após aplicar a instalação os pods e serviços estão ativos como é possivel observar na imagem 
+
+
+Após isso seguimos com a instalção do ingress
+
+4.1 - Ingress
+
+O ingress tem o intuito de expor nossa aplicação para a internet utilizado o NLB da OCI para o nosso projeto nesse caso , para realizar a instalação utilizamos o helm 
+```shell
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx \
+  --set controller.service.annotations."oci\.oraclecloud\.com/load-balancer-type"=nlb \
+  --set controller.service.annotations."oci-network-load-balancer\.oraclecloud\.com/security-list-management-mode"=All \
+  --set controller.service.type=NodePort \
+  --set controller.service.nodePorts.http=30080 \
+  --set controller.service.nodePorts.https=30443
+```
+E aplicamos a configuração do ingress que está na pasta Kubernetes/igress
+
+```shell
+Kubectl apply -f Kubernetes/igress/senhas-ingress.yaml
+```
+Após a instalação , podemos acessar nossa aplicação na página . Para o meu caso foi criada a url senhas.fellipe.dev.br
+
+![image](https://github.com/user-attachments/assets/f8b7a1a6-c483-49f6-b463-d2693c9b3a8d)
+
+E podemos observar também que o certificado configurado em nossos manifestos do ingress foram aplicados e estão sendo utilizados 
+
+![image](https://github.com/user-attachments/assets/688fa228-416e-4cf6-a5ae-4ccf6a7a2e03)
+
+
 =======
 4 - Kyverno - Politicas de uso para o projeto
 
 5 - Locust - Teste de capacidade gerados e seus resultados 
+
+O Locust é uma ferramenta OpenSource que permite executarmos  estresse  de carga em nossa aplicação. Com ela, é possivel criar  scripts python para definir quais paths serão testamos e o tipo de teste a ser feito no website Você pode ver como o meu Locust está provisionado nos manifestos da pasta Locust 
+
+Esta dividida em dois testes 
+Ficar gerando senhas na API a partir da rota /api/gerar-senha
+Ficar consultando as senhas através da rota /api/senhas
+
+Para acessar o locust acessar a url https://locust.fellipe.dev.br
+
+Através da interface web, vou fazer o Locust bater diretamente no Service do Giropops-Senhas. Como os dois serviços estão dentro do Cluster, farei isso pelo DNS interno para que eu não tenha problemas de carga na minha máquina ou ALB:
+
+![image](https://github.com/user-attachments/assets/80aa1682-529c-4522-a39e-59d554c5d639)
+
 
 6 - Monitoring - 
