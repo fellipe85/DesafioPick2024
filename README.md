@@ -111,11 +111,16 @@ Podemos observar os testes em execução
 
 ![image](https://github.com/user-attachments/assets/0e9fa282-362b-426b-8280-e5b63571220e)
 
-Como no caso temos camada de CDN para a nossa aplicação os pods se permaneceram intacticos . Os resultados podem ser observados na pasta  
+Como no caso temos camada de CDN para a nossa aplicação os pods se permaneceram intacticos .
 
  Desabilitadno o CDN , podemos observar que o HPA entrou e fez o update para os 10 pods
 
 ![image](https://github.com/user-attachments/assets/2e99be77-842f-4492-b7bd-66fb3dbb33a5)
+
+Podemos observar que com o CDN Ativo tivemos carga de 10 mil usuários sem nenhum erro ou perda de pacotes , melhorando bastante a questão de utilização de recursos no cluster.  Os resultados do teste  podem ser observados na pasta locust/Resultados
+
+
+
 
 
 
