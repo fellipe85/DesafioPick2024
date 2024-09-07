@@ -103,5 +103,16 @@ Através da interface web, vou fazer o Locust bater diretamente no Service do Gi
 
 ![image](https://github.com/user-attachments/assets/80aa1682-529c-4522-a39e-59d554c5d639)
 
+No inicio do teste podemos observar   que temos apenas 3 pods para giropops senhas
+
+![image](https://github.com/user-attachments/assets/19b2e690-8879-40b9-8403-aa12ba71e840)
+
+Podemos observar os testes em execução
+
+![image](https://github.com/user-attachments/assets/0e9fa282-362b-426b-8280-e5b63571220e)
+
+Como no caso temos camada de CDN para a nossa aplicação os pods se permaneceram intacticos . Os resultados podem ser observados na pasta  
+
+
 
 # 6 - Monitoring - 
