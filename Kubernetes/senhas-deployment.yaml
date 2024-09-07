@@ -16,7 +16,7 @@ spec:
         app: giropops-senhas
     spec:
       containers:
-      - image: fellipe85/giropops-senhas-melange-arm:1.0
+      - image: fellipe85/giropops-senhas-melange-arm:2.0
         name: giropops-senhas
         ports:
         - containerPort: 5000
