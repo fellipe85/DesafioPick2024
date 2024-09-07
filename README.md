@@ -113,6 +113,10 @@ Podemos observar os testes em execução
 
 Como no caso temos camada de CDN para a nossa aplicação os pods se permaneceram intacticos . Os resultados podem ser observados na pasta  
 
+ Desabilitadno o CDN , podemos observar que o HPA entrou e fez o update para os 10 pods
+
+![image](https://github.com/user-attachments/assets/2e99be77-842f-4492-b7bd-66fb3dbb33a5)
+
 
 
 # 6 - Monitoring - 
