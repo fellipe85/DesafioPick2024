@@ -1,0 +1,72 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+    - name: Install Packges
+      run:  |
+        curl -O -L "https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64"
+        mv cosign-linux-amd64 /usr/local/bin/cosign
+        chmod +x /usr/local/bin/cosign
+
+    - name: Get the app version
+      id: vars
+      run: echo "VERSION=$(cat ./melange-apko/version.txt )" >> $GITHUB_ENV
+
+    - name: Build with Melange
+      run: |
+        mkdir ./app ./packages
+        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+        docker pull cgr.dev/chainguard/melange:latest
+        docker run --rm -v "${PWD}":/work cgr.dev/chainguard/melange keygen
+        docker run --privileged --rm -v "$PWD":/work -w /work cgr.dev/chainguard/melange build ./melange-apko/giropops_alpine_melange.yaml --source-dir ./app --arch amd64,arm64 --signing-key ./melange.rsa
+
+    - name: Build with Apko
+      run: |
+        docker run --rm --workdir /work -v "${PWD}":/work -w /work cgr.dev/chainguard/apko build melange-apko/giropops_alpine_apko.yaml giropops-senhas-melange:${{ env.VERSION }} giropops-senhas-melange.tar --arch amd64,arm64
+
+       
+    - name: Load image into docker   
+      run: |
+        docker load < ./giropops-senhas-melange.tar 
+ 
+
+    - name: Push Docker image to Docker Hub
+      run: |
+        docker tag giropops-senhas-melange:${{ env.VERSION }}-amd64 ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange:${{ env.VERSION }}
+        docker tag giropops-senhas-melange:${{ env.VERSION }}-arm64 ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange-arm:${{ env.VERSION }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/giropops-senhas-melange-arm:${{ env.VERSION }}
+
+    - name: Load cosign key
+      run: |
+        echo "${{ secrets.COSIGN_KEY }}" > cosign.key
+
+    - name: Sign with cosign
+      run: |
+         cosign sign --yes --key cosign.key fellipe85/giropops-senhas-melange:${{ env.VERSION }}
+         cosign sign --yes --key cosign.key fellipe85/giropops-senhas-melange-arm:${{ env.VERSION }}
+      env:
+         COSIGN_PASSWORD: 

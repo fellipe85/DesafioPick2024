@@ -3,7 +3,11 @@ Desafio de implementar a aplicação  Giropops Senhas em cluster kubernetes e se
 
 Objetivo: Criar uma aplicação de gestão de senhas utilizando Docker, Kubernetes, Helm, Kyverno, Cosign, Prometheus, apko e Melange para garantir a segurança, automação, e monitoramento contínuo da aplicação.
 
-O projeto está dividio em pastas, em cada pasta exista a explicação do seu funcionamento. 
+Para utilização estou utilizando um cluster k8s na OCI ([oracle cloud](https://cloud.oracle.com/)) na opção de free tier , feito utilizando o projeto do Rapha_Borges https://github.com/Rapha-Borges/oke-free. Com isso possuo um cluster kubernetes no cloud , disponivel para efeutar os estudos e projetos.
+
+Para o projeto do Giropops-senhas , está sendo utilizada a infraesstrutura como pode se observar na imaagem abaixo 
+
+Abaixo temos o projeto dividido em pastas. 
 
 Prefácio
 
@@ -48,3 +52,9 @@ kubectl apply -f Kubernetes/
 ```
 
 Com esse comando fazemos a instalação da aplicação(giropos e redis) 
+=======
+4 - Kyverno - Politicas de uso para o projeto
+
+5 - Locust - Teste de capacidade gerados e seus resultados 
+
+6 - Monitoring - 
