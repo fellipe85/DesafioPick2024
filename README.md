@@ -103,8 +103,9 @@ https://github.com/fellipe85/DesafioPick2024/actions/runs/10749261010/job/298139
 A imagem que está sendo utilizada no nosso kubernetes é essa fellipe85/fellipe85/giropops-senhas-melange-arm:2.0 , tive que optar por ser arm devido ao cluster kubernetes estar em arquitetura arm.
 
 # 4 - Kubernetes
+Antes de irmos as criações dos manifestos , gostaria de agradecer ao [Rapha-Borges](https://github.com/Rapha-Borges) , por ter disponibilziado a criação do cluster Kubernetes na OCI , Não irei demonstrar como foi feita minha instalação do cluster , pois utilizei exatamente a documentação criada que se encontra [aqui](https://github.com/Rapha-Borges/oke-free/tree/main). Nela esta sendo explicado como é criada toda a infraestrura na OCI utilizando o always free, sendo assim possibilitando ter um cluster kubenentes com 3 worknodes baseados em arm.
 
-Optei por criar um namespace separado para o giropops-senhas e o redis , nesse caso , separando a execução deles somente para esse namespace. Além disso foi criado um ingress para todos os serviços utilizados , cada um representado em seu diretorio. Dentro do diretorio temos os manifestos para o Giropops-senhas e Redis , ambos ncessários para a aplicação funcionar. 
+No processo de instalação do cluster foi necessário instalar a ferrameta do kubectl e oci-cli para comunicaçãoO com o cluster , também esta demonstrada . Seguindo para os manifestos , optei por criar um namespace separado para o giropops-senhas e o redis , outro para o locust e outro para monitoramento, nesse caso , separando a execução deles somente para esse namespace. Além disso foi criado um ingress para todos os serviços utilizados , cada um representado em seu diretorio. Dentro do diretorio temos os manifestos para o Giropops-senhas e Redis , ambos ncessários para a aplicação funcionar. 
 
 Para instalação utilizamos 
 
@@ -116,6 +117,11 @@ Com esse comando fazemos a instalação da aplicação(giropos e redis)
 
 Após aplicar a instalação os pods e serviços estão ativos como é possivel observar na imagem 
 
+![image](https://github.com/user-attachments/assets/0a80d619-3d12-494a-a579-62bead5a06fa)
+![image](https://github.com/user-attachments/assets/f85a3d95-b8ac-4071-bf4c-0c30e39cdd28)
+![image](https://github.com/user-attachments/assets/af5d924e-287c-4135-8fd4-07ace13f0bd0)
+
+Toda e qualquer configuração para o nosso cluster está sendo realizada via manifestos e estará na pasta [Kubernetes](https://github.com/fellipe85/DesafioPick2024/tree/main/Kubernetes)
 
 Após isso seguimos com a instalção do ingress
 
@@ -180,6 +186,7 @@ Verificando se foi instalado
 
 Para a nossa aplicação , criamos uma regra para que sempre tenha que existir um valor de cpu e memoria definido , e também containers sem  root em execução.
 
+Caso queira adicionar mais regras e saber mais sobre o assunto a documentação do kyverno possui tudo muito bem detalhado https://kyverno.io/policies/ , inclusive para melhorias no futuro seria aplicar mais policies deixando mais seguro meu cluster.
 
 # 6 - Locust - Teste de capacidade gerados e seus resultados 
 
