@@ -31,7 +31,7 @@ Abaixo temos o projeto dividido em pastas.
 
 # 1 - Infraestrutura
 
-Para a infraestrutura , incialmente foi adquirido um dominio fellipe.dev.br para criação do projeto , esse dominio esta hospedado no Cloudflare , onde é aplicada diversos modulos de defesa contra DDOs , bots inválidos oferencendo serviço de WAF para a aplicação , além disso temos também a opção de CDN , fazendo com que a aplicação responda mais rapidamente em qualquer lugar do mundo, outra opção que está ativada é DNSSEC , oferecendo proteção para o dominio. Após o cloudflare , optei em utilizar um cluster OKE na OCI , pois oferece um cluster sempre de graça. Para a configuração foi utilizada o projeto do Rapha_Borges https://github.com/Rapha-Borges/oke-free. Todo o cluster é criado utilizando terraform ou opentofu. 
+Para a infraestrutura, inicialmente foi adquirido um domínio fellipe.dev.br para a criação do projeto. Esse domínio está hospedado no Cloudflare, onde são aplicados diversos módulos de defesa contra DDoS e bots inválidos, oferecendo serviço de WAF para a aplicação. Além disso, temos também a opção de CDN, que faz com que a aplicação responda mais rapidamente em qualquer lugar do mundo. Outra opção ativada é o DNSSEC, que oferece proteção para o domínio. Após o Cloudflare, optei por utilizar um cluster OKE na OCI, pois oferece um cluster sempre de graça. Para a configuração, foi utilizado o projeto do Rapha_Borges https://github.com/Rapha-Borges/oke-free. Todo o cluster é criado utilizando Terraform ou OpenTofu.
 
 Abaixo está ilustrado como está a infraestrutura.
 
@@ -39,10 +39,10 @@ Abaixo está ilustrado como está a infraestrutura.
 
 
 # 2 - Docker 
+Nesse projeto, escolhemos utilizar imagens seguras. Em nosso processo inicial, criamos imagens utilizando imagens da Chainguard, que já estão preparadas com correções de CVEs. Todas as imagens foram criadas em multistage, aproveitando para deixá-las o mais compactas possível.
 
-Nesse projeto escolhemos utilizar imagens seguras , em nosso processo inicial fizemos imagens utilizando imagens da chainguard que já estão preparadas com correções de CVEs . Todas imagens foram criadas em Multistage aproveitando para deixar o mais compacta possivel.
+Abaixo, demonstramos como está sendo produzida a imagem, tanto do Giropops quanto das senhas. Para ambos os casos, foi utilizada a opção de multistage, a fim de diminuir camadas e deixar a imagem o mais segura possível.
 
-Abaixo demonstramos como esta sendo produzida a imagem tanto do giropops senhas. Para ambos os casos foi utilizado a opção de multistage afim de diminuir camadas e deixar a imagem a o mais segura possivel.
 ```giropops-senhas.yaml
 FROM cgr.dev/chainguard/python:latest-dev as build
 WORKDIR /app
@@ -58,7 +58,7 @@ EXPOSE 5000
 ENTRYPOINT ["/home/nonroot/.local/bin/flask","run","--host=0.0.0.0"]
 #ENTRYPOINT ["python" , "app.py"]
 ```
-Após escrever o Dockerfile , vamos realizar o build da imagem , enviar  a imagem para o docker hub e assinar com o cosign. Com isso teremos nossa imagem armazenada no Hub e assinada. Para realizar devemos ter o cosgin instalado na máquina e o login realizado no dockerhub , abaixo vamos demonstrar como é feita a build , instalação do cosign , login no docker hub , push da imagem para o hub e assinatura dessa imagem 
+Após escrever o Dockerfile, vamos realizar o build da imagem e enviar para o docker hub também assinar com o cosign. Com isso teremos nossa imagem armazenada no Docker Hub e assinada. Para realizar o processo de assinar, devemos  ter o cosgin instalado na máquina, e o login realizado no Docker Hub, abaixo vamos demonstrar como é feita a build, instalação do cosign, login no docker hub, push da imagem para o Docker Hub e a assinatura dessa imagem. 
 
 ```shell
 cd Docker
