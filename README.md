@@ -232,11 +232,10 @@ Após baixar a carga, é possível notar que os pods terminam e a aplicação vo
 Podemos observar que com o CDN Ativo tivemos carga de 10 mil usuários sem nenhum erro ou perda de pacotes, melhorando bastante a questão de utilização de recursos no cluster.  Os resultados do teste  podem ser observados na pasta [locust/Resultados](https://github.com/fellipe85/DesafioPick2024/tree/main/locust/resultados)
 
 
-# 7 - Monitoring - 
+# 7 - Monitoring 
 
-Para monitoramento esscolhemos a stack Prometheus/Grafana/Alertmanager para realizar o monitoramento do cluster e da aplicação. Para começar precisamos realizar a instalação e para isso vamos realizar atraves do kube-prometheus, ele ja tem node_exporter , prometheus , grafana , tudo integrado 
+Para realizar monitoramento do cluster e da aplicação foi escolhido a stack Prometheus/Grafana/Alertmanager. A instalação é realizada utilizando helm, que já possui o node_exporter, prometheus, alert manager e grafana. 
 
-O kube-prometheus é um conjunto de manifestos do Kubernetes que nos permite ter o Prometheus Operator, Grafana, AlertManager, Node Exporter, Kube-State-Metrics, Prometheus-Adapter instalados e configurados de forma tranquila e com alta disponibilidade. Além disso, ele nos permite ter uma visão completa do nosso cluster de Kubernetes. Ele nos permite monitorar todos os componentes do nosso cluster de Kubernetes, como por exemplo: kube-scheduler, kube-controller-manager, kubelet, kube-proxy, etc.
 
 #### Instalando o Grafana/Prometheus/AlertManager
 
@@ -244,22 +243,25 @@ Para instalar só seguir com os comandos
 ```shell
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 ```
-O processo de instalação pode demorar um pouco , podemos checar se foi instalado com o comando 
-```shell
-kubectl get servicemonitors -A
-```
-Após a instalação dos CRDs, vamos instalar o Prometheus e o Alertmanager. Para isso, basta executar o seguinte comando:
+
+A instalação da stack de monitoramento é realizada com o seguinte comando:
 ```shell
 helm install prometheus prometheus-community/prometheus --namespace monitoring
 ```
-Checar se foi instalado e esta rodando 
+
+O processo de instalação é um pouco demorado e pode ser checado através do comando: 
+```shell
+kubectl get servicemonitors -A
+```
+
+Para validar se foi instalado e esta executando como esperado, pode ser usado o comando: 
 
 ```shell
 kubectl get pods -n monitoring
 ```
-Podemos ver o prometheus rodando , apos isso vamos criar o service e o ingress para o prometheus.
+Com o prometheus executando, é criado o service e o ingress para o prometheus e Grafana.
 
-Para acessar o Grafana, vamos utilizar o usuário `admin` e a senha `admin`, e já no primeiro login ele irá pedir para você alterar a senha.No Grafana para monitoramento do cluster vamos importar o dashboard do GrafanaLabs (https://grafana.com/grafana/dashboards/12740)
+Para acessar o Grafana, vamos utilizar o usuário `admin` e a senha `admin`, onde no primeiro login será solicitado para alterar a senha. No Grafana para monitoramento do cluster vamos importar o dashboard do GrafanaLabs (https://grafana.com/grafana/dashboards/12740)
 
 
 
