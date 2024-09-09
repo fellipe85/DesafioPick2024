@@ -242,11 +242,13 @@ Para realizar monitoramento do cluster e da aplicação foi escolhido a stack Pr
 Para instalar só seguir com os comandos 
 ```shell
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
 ```
 
 A instalação da stack de monitoramento é realizada com o seguinte comando:
 ```shell
 helm install prometheus prometheus-community/prometheus --namespace monitoring
+helm install grafana grafana/grafana --namespace monitoring 
 ```
 
 O processo de instalação é um pouco demorado e pode ser checado através do comando: 
@@ -259,11 +261,18 @@ Para validar se foi instalado e esta executando como esperado, pode ser usado o 
 ```shell
 kubectl get pods -n monitoring
 ```
-Com o prometheus executando, é criado o service e o ingress para o prometheus e Grafana.
+Com o prometheus e grafana executando, é criado o ingress para o  Grafana que estão na pasta monitoring.
+```shell
+kubectl apply -f grafana-ingress.yaml
+```
+Para acessar o Grafana, vamos utilizar o usuário `admin` e a senha é necessário executar o comando `kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`, essa será a senha de acesso pelo admin. No Grafana para monitoramento do cluster , primeamente é necessário adicionar o prometheus como data source 
+![image](https://github.com/user-attachments/assets/f7196193-9c02-44c8-9cce-03217c535731)
 
-Para acessar o Grafana, vamos utilizar o usuário `admin` e a senha `admin`, onde no primeiro login será solicitado para alterar a senha. No Grafana para monitoramento do cluster vamos importar o dashboard do GrafanaLabs (https://grafana.com/grafana/dashboards/12740)
 
+Agora, vamos importar o dashboard do GrafanaLabs (https://grafana.com/grafana/dashboards/12740)
 
+![image](https://github.com/user-attachments/assets/c32e706e-3cf2-4ac3-b990-704e81d5a2d2)
 
+Com isso temos o nosso cluster Kubernetes monitorado
 # 8 - Helm
 
