@@ -265,7 +265,9 @@ Com o prometheus e grafana executando, é criado o ingress para o  Grafana que e
 ```shell
 kubectl apply -f grafana-ingress.yaml
 ```
-Para acessar o Grafana, vamos utilizar o usuário `admin` e a senha é necessário executar o comando `kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`, essa será a senha de acesso pelo admin. No Grafana para monitoramento do cluster , primeamente é necessário adicionar o prometheus como data source 
+Para acessar o Grafana, vamos utilizar o usuário `admin` e a senha é necessário executar o comando `kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo`, essa será a senha de acesso pelo admin. No Grafana para monitoramento do cluster , o acesso pode ser realizado atraves da url https://grafana.fellipe.dev.br/
+
+Primeamente é necessário adicionar o prometheus como data source 
 ![image](https://github.com/user-attachments/assets/f7196193-9c02-44c8-9cce-03217c535731)
 
 
