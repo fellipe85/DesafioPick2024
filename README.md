@@ -276,5 +276,42 @@ Agora, vamos importar o dashboard do GrafanaLabs (https://grafana.com/grafana/da
 ![image](https://github.com/user-attachments/assets/c32e706e-3cf2-4ac3-b990-704e81d5a2d2)
 
 Com isso temos o nosso cluster Kubernetes monitorado
+
 # 8 - Helm
 
+O Helm é uma ferramenta open-source que permite gerenciar aplicações Kubernetes de forma simples e eficiente. Com o Helm, você pode instalar, atualizar e desinstalar aplicações em um cluster Kubernetes com facilidade.
+
+As aplicações Helm são definidas em arquivos chamados charts. Um chart é um pacote que contém todos os recursos necessários para executar uma aplicação no Kubernetes, como deployments, services, configmaps, secrets, entre outros.
+
+Instalação
+Para instalar o Helm, utilize os comandos abaixo:
+
+```shell
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+```
+Criando um chart
+Para criar um chart, execute o seguinte comando:
+
+```shell
+helm create mychart
+```
+Quando executar o comando existirá uma estrutura de diretórios e arquivos que gerenciam a aplicação . A estrutura do chart é a seguinte
+
+```
+mychart/
+├── charts/
+├── Chart.yaml
+├── templates/
+│   ├── deployment.yaml
+│   ├── hpa.yaml
+│   ├── ingress.yaml
+│   ├── service.yaml
+└── values.yaml
+```
+O arquivo Chart.yaml contém as informações sobre o chart, como nome, versão, descrição, entre outros. O arquivo values.yaml contém os valores padrão que serão utilizados para configurar a aplicação.O Helm Charts do meu giropops-senhas está disponível em um repositório privado no GitHub no endereço: https://github.com/fellipe85/senhas. Esse pacote esta disponivel para uso e instalação.
+
+Com o helm você pode utilizar mais de um arquivo values.yaml para cada ambiente, como por exemplo values-dev.yaml, values-prod.yaml, values-stage.yaml e assim por diante. Assim, você pode configurar a aplicação de acordo com as necessidades de cada ambiente.
+
+Neste caso , o arquivo values.yaml para configurar a aplicação e o arquivo values-dev.yaml para configurar o ambiente de desenvolvimento. Assim seperando ambientes por namespaces , tornando possivel ter multiplos ambientees no mesmo cluster.
