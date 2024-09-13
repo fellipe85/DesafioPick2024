@@ -26,7 +26,7 @@ O projeto está dividido em pastas conforme o Prefácio deste documento.
 
 7 - [Monitoring ](https://github.com/fellipe85/DesafioPick2024/tree/main/monitoring)- Acesso ao monitoramento da nossa aplicação
 
-8 - [Helm](https://github.com/fellipe85/DesafioPick2024/tree/main/helm_charts)
+8 - [Helm](https://github.com/fellipe85/DesafioPick2024/tree/main/helm_charts) - Criação de charts.
 
 
 # 1 - Infraestrutura
