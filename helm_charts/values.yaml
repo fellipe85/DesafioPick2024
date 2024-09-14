@@ -1,0 +1,72 @@
+giropops-senhas:
+  name: "giropops-senhas"
+  image: "fellipe85/giropops-senhas-melange-arm:2.0"
+  replicas: "3"
+  port: 5000
+  labels:
+    app: "giropops-senhas"
+    env: "labs"
+    live: "true"
+  service:
+    type: "NodePort"
+    port: 5000
+    targetPort: 5000
+    name: "giropops-senhas-port"
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "250m"
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+  env:
+   - name: REDIS_HOST
+     value: redis-service
+
+redis:
+  image: "cgr.dev/chainguard/redis"
+  replicas: 1
+  port: 6379
+  labels:
+    app: "redis"
+    live: "true"
+  service:
+    type: "ClusterIP"
+    port: 6379
+    targetPort: 6379
+    name: "redis-port"
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "250m"
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+
+Senhas-hpa:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: giropops-senhas
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 15
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15

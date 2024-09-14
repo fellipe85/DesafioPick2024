@@ -3,11 +3,11 @@ kind: ServiceMonitor
 metadata: 
 name: giropops-servicemonitor
   labels: 
-    app: giropops-senhas 
+    app: giropops-service 
 spec: 
   selector:
     matchLabels:
-      app: giropops-senhas 
+      app: giropops-service  
   endpoints:
     - interval: 10s
       path: /metrics

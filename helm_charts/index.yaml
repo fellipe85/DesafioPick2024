@@ -12,12 +12,12 @@ entries:
     - giropops
     - redis
     maintainers:
-    - email: fabio.bartoli@outlook.com
-      name: Fabio Bartoli
+    - email: fellipm@hotmail.com
+      name: Fellipe Martins
     name: giropops-chart
     sources:
-    - https://github.com/fellipe85/DesafioPick2024/
+    - https://github.com/fellipe85/helm_senhas/
     urls:
-    - https://github.com/fellipe85/DesafioPick2024/helm_charts/giropops-chart-0.1.0.tgz
+    - https://github.com/fellipe85/helm_senhas/charts/giropops-chart-0.1.0.tgz
     version: 0.1.0
 generated: "2024-08-26T21:07:08.194152363-03:00"

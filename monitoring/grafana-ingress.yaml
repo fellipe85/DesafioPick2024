@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: giropops-senhas
-  namespace: giropops-senhas
+  name: grafana
+  namespace: monitoring
   annotations:
     #nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: "nginx"
@@ -12,16 +12,16 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - "senhas.fellipe.dev.br"
-    secretName: senhas.fellipe.dev.br-tls
+    - "grafana.fellipe.dev.br"
+    secretName: grafana.fellipe.dev.br-tls
   rules:
-    - host: senhas.fellipe.dev.br
+    - host: grafana.fellipe.dev.br
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
-              service: 
-                name: giropops-service
+              service:
+                name: grafana
                 port:
-                  number: 5000
+                  number: 3000 
