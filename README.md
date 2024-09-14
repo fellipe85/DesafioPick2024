@@ -300,14 +300,15 @@ helm create mychart
 Quando executar o comando existirá uma estrutura de diretórios e arquivos que gerenciam a aplicação . A estrutura do chart é a seguinte
 
 ```
-mychart/
+helm-charts/
 ├── charts/
 ├── Chart.yaml
 ├── templates/
-│   ├── deployment.yaml
-│   ├── hpa.yaml
-│   ├── ingress.yaml
-│   ├── service.yaml
+│   ├── senhas-deployment.yaml
+|   ├── redis-deployment.yaml
+│   ├── senhas-hpa.yaml
+│   ├── redis-service.yaml
+│   ├── senhas-service.yaml
 └── values.yaml
 ```
 O arquivo Chart.yaml contém as informações sobre o chart, como nome, versão, descrição, entre outros. O arquivo values.yaml contém os valores padrão que serão utilizados para configurar a aplicação.O Helm Charts do meu giropops-senhas está disponível em um repositório privado no GitHub no endereço: https://github.com/fellipe85/senhas. Esse pacote esta disponivel para uso e instalação.
