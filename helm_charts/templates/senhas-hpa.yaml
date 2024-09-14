@@ -1,0 +1,32 @@
+apiVersion: autoscaling/v2      
+kind: HorizontalPodAutoscaler
+metadata:
+  name: giropops-hpa
+  namespace: giropops-senhas
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment                 
+    name: giropops-senhas
+  minReplicas: {{ .Values.senha-hpa.minreplicas }}                     
+  maxReplicas: {{ .Values.senha-hpa.maxreplicas }}
+  metrics:
+  - type: Resource                   
+    resource:
+      name: cpu                      
+      target:
+        type: Utilization            
+        averageUtilization: {{ .Values.senha-hpa.metrics.resource.target.averageUtilization }}       
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: {{ .Values.senha-hpa.behavior.stabilizationWindowSeconds }}  
+      policies:
+      - type: Percent                
+        value: {{ .Values.senha-hpa.behavior.policies.value }}                  
+        periodSeconds:  {{ .Values.senha-hpa.behavior.policies.periodSeconds }}            
+    scaleDown:
+      stabilizationWindowSeconds: {{ .Values.senha-hpa.scaleDown.stabilizationWindowSeconds }}
+      policies:
+      - type: Percent                  
+        value: {{ .Values.senha-hpa.scaleDown.policies.value }}      
+        periodSeconds: {{ .Values.senha-hpa.scaleDown.policies.periodSeconds }}
